@@ -37,9 +37,9 @@ jobs:
         with:
           node-version: "21"
 
-      - name: Install semantic-release and plugins
+      - name: Install semantic-release and required plugins
         run: |
-          npm install -g semantic-release @semantic-release/changelog
+          npm install -g semantic-release @semantic-release/changelog @semantic-release/git
 
       - name: Verify semantic-release installation
         run: |
