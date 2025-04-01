@@ -10,6 +10,7 @@ jobs:
   release:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,14 +32,13 @@ jobs:
           pip install --upgrade pip
           pip install semantic-release poetry-plugin-export
 
-      - name: Verify semantic-release installation
-        run: |
-          source venv/bin/activate
-          semantic-release --help
-
-      - name: Determine next version and create release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Run semantic-release
         run: |
           source venv/bin/activate
           semantic-release
+
+      - name: GH Release
+        uses: softprops/action-gh-release@v2.2.1
+        with:
+          files: build/*
+          token: ${{ secrets.GH_TOKEN }}
