@@ -33,7 +33,14 @@ jobs:
           pip install semantic-release poetry-plugin-export poetry
           pip check
 
+      - name: Verify semantic-release installation
+        run: |
+          which semantic-release
+          semantic-release --version
+
       - name: Run semantic-release
-        run: semantic-release
+        run: |
+          . venv/bin/activate
+          semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
