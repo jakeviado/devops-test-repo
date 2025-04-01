@@ -22,16 +22,20 @@ jobs:
         with:
           python-version: "3.10"
 
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
       - name: Create and activate virtual environment
         run: |
           python -m venv venv
           . venv/bin/activate
 
-      - name: Install dependencies
+      - name: Install semantic-release and dependencies
         run: |
-          pip install --upgrade pip
-          pip install semantic-release poetry-plugin-export poetry
-          pip check
+          npm install -g semantic-release
+          npm install poetry-plugin-export poetry
 
       - name: Verify semantic-release installation
         run: |
@@ -40,7 +44,6 @@ jobs:
 
       - name: Run semantic-release
         run: |
-          . venv/bin/activate
           semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
