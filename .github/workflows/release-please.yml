@@ -1,5 +1,6 @@
+name: Release Please
+
 on:
-  workflow_dispatch:
   push:
     branches:
       - master
@@ -8,18 +9,32 @@ permissions:
   contents: write
   pull-requests: write
 
-name: release-please
-
 jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
-          # this assumes that you have created a personal access token
-          # (PAT) and configured it as a GitHub action secret named
-          # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install commitlint and husky
+        run: |
+          npm install --save-dev @commitlint/config-conventional @commitlint/cli husky
+          npx husky install
+          npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
+
+      - name: Configure commitlint
+        run: |
+          echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
+          npm pkg set scripts.commitlint="commitlint --edit"
+
+      - name: Release Please
+        uses: googleapis/release-please-action@v4
+        with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          # this is a built-in strategy in release-please, see "Action Inputs"
-          # for more options
-          release-type: simple
