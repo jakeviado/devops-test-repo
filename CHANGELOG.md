@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/jakeviado/devops-test-repo/compare/v1.0.0...v1.1.0) (2025-04-06)
+
+
+### Features
+
+* sample 1 changes ([54c57a6](https://github.com/jakeviado/devops-test-repo/commit/54c57a6acece4ba7712d972b1f35cd940d55ab06))
+
 ## 1.0.0 (2025-04-06)
 
 
