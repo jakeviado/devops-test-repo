@@ -11,7 +11,7 @@ def plagiarism_checker(text1, text2):
     return similarity_score[0][0]
 
 
-text1 = "This is a sample text."
+text1 = "This is a sample text that is not similar to another text."
 text2 = "This is another a example text that is similar but not identical, but still has a difference."
 score = plagiarism_checker(text1, text2)
 print(f"Similarity score: {score}")
